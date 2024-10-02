@@ -40,8 +40,16 @@ app.post("/hdfcWebhook", async (req, res) => {
         })
     } catch (error) {
          // successfully captured req.
-        res.status(200).json({
+        res.status(411).json({
             message: "failed"
+        })
+        db.onRampTransaction.update({
+            where: {
+                token: paymentInformation.token
+            },
+            data: {
+                status: "Failure"
+            }
         })
     }
 })
